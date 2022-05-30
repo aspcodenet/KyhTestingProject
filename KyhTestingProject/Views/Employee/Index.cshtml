@@ -1,0 +1,55 @@
+﻿@model KyhTestingProject.ViewModels.EmployeeIndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<h2>Employees </h2>
+<p>Since we started @Model.PeopleLeft has left</p>
+<table role="grid">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Title</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var activity in Model.Employees)
+    {
+
+        <tr>
+            <th scope="row">@activity.Name</th>
+            <th scope="row">@activity.JobTitle</th>
+            <td>                        <a role="button" asp-action="View" 
+                                           asp-route-Id="@activity.Id">
+                    View
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+    <tfooter>
+        <tr>
+@*            <th scope="col">
+                @if (Model.PageNo > 1)
+                {
+                    <a asp-action="Index" asp-route-pageNo="@(Model.PageNo - 1)" role="button">Prev</a>
+                }
+                
+            </th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">
+                @if (Model.PageNo < Model.TotalPageCount)
+                {
+                    <a asp-action="Index" asp-route-pageNo="@(Model.PageNo + 1)" role="button">Next</a>
+                }
+            </th>
+*@
+        </tr>
+    </tfooter>
+</table>

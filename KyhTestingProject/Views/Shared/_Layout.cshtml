@@ -1,0 +1,75 @@
+﻿<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Systementor SSO</title>
+    <meta name="description" content="">
+@*    //TODO
+*@    <link rel="shortcut icon" href="https://picocss.com/favicon.ico"> 
+    <link rel="stylesheet" href="https://unpkg.com/@@picocss/pico@latest/css/pico.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"  />
+  </head>
+
+  <body>
+
+    <!-- Nav -->
+    <nav class="container-fluid">
+      <ul>
+        <li><a href="./" class="contrast" onclick="event.preventDefault()"><strong>Stefans</strong> BusinessSystem</a></li>
+      </ul>
+        <ul>
+            <li>
+                <details role="list" dir="rtl">
+                    <summary aria-haspopup="listbox" role="link" class="secondary">Admin</summary>
+                    <ul role="listbox">
+                        <li><a asp-action="Index" asp-controller="Employee">Employees </a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+    </nav><!-- ./ Nav -->
+
+    <!-- Main -->
+  <main class="container  top">
+      @RenderBody()
+  </main><!-- ./ Main -->
+
+    <!-- Footer -->
+    <footer class="container-fluid">
+      
+        
+        <div class="grid">
+            <div>
+                    (C) ASPCode.net @DateTime.Now.Year Product by
+                    <a href="https://systementor.se">
+                        Systementor AB
+                    </a>
+
+            </div>
+            <div >
+                <a href="https://aspcode.net/privacy/home/termsofservice">Terms of service</a>
+                <a href="https://aspcode.net/home/privacy">Privacy</a>
+            </div>
+            <div>
+                
+            </div>
+        </div>        
+        
+
+    </footer><!-- ./ Footer -->
+
+  @RenderSection("Scripts", required: false)
+  </body>
+
+</html>
+
+
+
+
+
+
+
+
