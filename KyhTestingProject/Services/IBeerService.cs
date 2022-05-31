@@ -12,9 +12,12 @@ public class SwedishBeerService : IBeerService
 {
     public bool CanIBuyBeer(int age, Location location, decimal promilleHalt)
     {
-        if (promilleHalt > 1.0m) return false;
-        if (age >= 18 && location == Location.Krogen) return true;
-        if (age >= 20 && location == Location.Systemet) return true;
+        if (promilleHalt > 1.0m) 
+            return false;
+        if (age >= 18 && location == Location.Krogen) 
+            return true;
+        if (age >= 20 && location == Location.Systemet) 
+            return true;
         return false;
     }
 }
