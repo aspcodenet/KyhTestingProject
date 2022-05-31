@@ -20,9 +20,10 @@ public class EmployeeController : Controller
     public IActionResult Index()
     {
         var model = new EmployeeIndexViewModel();
-        var (left, employees) = _employeeService.GetActiveEmployees();
-        model.Employees = _mapper.Map<IEnumerable<EmployeeIndexViewModel.EmployeeItem>>(employees).ToList();
-        model.PeopleLeft = left;
+        var result = _employeeService.GetActiveEmployees();
+        model.Employees = 
+            _mapper.Map<IEnumerable<EmployeeIndexViewModel.EmployeeItem>>(result.Employees).ToList();
+        model.PeopleLeft = result.NrOfPeopleWhoHasQuitted;
         return View(model);
     }
 }

@@ -10,9 +10,13 @@ public class EmployeeService : IEmployeeService
     {
         _context = context;
     }
-    public (int,IEnumerable<Employee>) GetActiveEmployees()
+    public ActiveEmployeesResult GetActiveEmployees()
     {
         var left = _context.Employees.Count(e => e.Ended.Year > 1);
-        return (left, _context.Employees.Where(e => e.Ended.Year == 1));
+        return new ActiveEmployeesResult
+        {
+            NrOfPeopleWhoHasQuitted = left,
+            Employees =  _context.Employees.Where(e => e.Ended.Year == 1).ToList()
+        };
     }
 }
