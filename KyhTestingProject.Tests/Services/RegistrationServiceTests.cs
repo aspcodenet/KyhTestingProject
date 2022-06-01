@@ -2,45 +2,48 @@
 using System.Runtime.CompilerServices;
 using KyhTestingProject.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace KyhTestingProject.Tests.Services;
 
-public class FakeUserRepository : IUserRepository
-{
-    public List<string> Existing { get; set; } = new List<string>();
+//public class FakeUserRepository : IUserRepository
+//{
+//    public List<string> Existing { get; set; } = new List<string>();
 
-    public bool Exists(string email)
-    {
-        return Existing.Contains(email);
-    }
+//    public bool Exists(string email)
+//    {
+//        return Existing.Contains(email);
+//    }
 
-    public int GetRegistreredCountToday()
-    {
-        return Existing.Count;
-    }
-}
+//    public int GetRegistreredCountToday()
+//    {
+//        return Existing.Count;
+//    }
+//}
 
-public class FakeEmailService : IEmailService
-{
-    public bool HasBeenCalled = false;
-    public void SendWelcomeEmail(string email)
-    {
-        HasBeenCalled = true;
-    }
-}
+//public class FakeEmailService : IEmailService
+//{
+//    public bool HasBeenCalled = false;
+//    public void SendWelcomeEmail(string email)
+//    {
+//        HasBeenCalled = true;
+//    }
+//}
 
 [TestClass]
 public class RegistrationServiceTests
 {
     private RegistrationService _sut;
-    private FakeUserRepository _repository;
-    private FakeEmailService _emailService;
+    private Mock<IUserRepository> _repositoryMock;
+    private Mock<IEmailService> _emailServiceMock;
+
+
     public RegistrationServiceTests()
     {
-        _repository = new FakeUserRepository();
-        _emailService = new FakeEmailService();
+        _repositoryMock = new Mock<IUserRepository>();
+        _emailServiceMock = new Mock<IEmailService>();
 
-        _sut = new RegistrationService(_repository,  _emailService );
+         _sut = new RegistrationService(_repositoryMock.Object,  _emailServiceMock.Object );
     }
 
     [TestMethod]
@@ -48,9 +51,8 @@ public class RegistrationServiceTests
     {
         //ARRANGE
         var email = "stefan@hej.se";
-        _repository.Existing.Clear();
-        _repository.Existing.Add(email);
-        
+        _repositoryMock.Setup(r => r.Exists(email)).Returns(true);
+
         //ACT
         var result = _sut.Register(email);
 
@@ -67,9 +69,7 @@ public class RegistrationServiceTests
     public void Should_not_allow_registration_if_more_than_10_today()
     {
         //ARRANGE
-        _repository.Existing.Clear();
-        for(int i = 0; i < 11; i++)
-            _repository.Existing.Add(i.ToString() + "@asdas.se" );
+        _repositoryMock.Setup(r => r.GetRegistreredCountToday()).Returns(11);
 
         //ACT
         var result = _sut.Register("sss@hej.se");
@@ -97,7 +97,6 @@ public class RegistrationServiceTests
     public void When_registration_is_ok_we_get_ok_result()
     {
         //ARRANGE
-        _repository.Existing.Clear();
 
         //ACT
         var result = _sut.Register("blabla@hej.se");
@@ -112,13 +111,12 @@ public class RegistrationServiceTests
     public void When_registration_is_ok_an_email_should_be_sent()
     {
         //ARRANGE
-        _repository.Existing.Clear();
 
         //ACT
         var result = _sut.Register("blabla@hej.se");
 
         //ASSERT
-        Assert.IsTrue( _emailService.HasBeenCalled );
+        _emailServiceMock.Verify(e => e.SendWelcomeEmail(It.IsAny<string>()), Times.Once());
     }
 
 
