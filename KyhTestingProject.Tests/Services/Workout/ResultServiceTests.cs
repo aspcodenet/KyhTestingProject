@@ -17,22 +17,26 @@ public class FakeUserService : IUserService
 
 public class FakeCalculationService : ICalculationService
 {
+    public int ValueToReturn { get; set; } = 10;
+
     public TimeSpan CalculateVelocityPerKm(DateTime workoutStart, DateTime workoutSlut, int workoutTotalMeters)
     {
-        return TimeSpan.FromSeconds(10);
+        return TimeSpan.FromSeconds(ValueToReturn);
     }
 }
 
 public class FakeStatisticsService : IStatisticsService
 {
+    public int ValueToReturn { get; set; } = 10;
+    public bool SaveNewRecordHasBeenCalled = false;
     public TimeSpan GetCurrentRecord(Guid workoutUserId)
     {
-        return TimeSpan.FromSeconds(10);
+        return TimeSpan.FromSeconds(ValueToReturn);
     }
 
     public void SaveNewRecord(Guid workoutUserId, TimeSpan speed)
     {
-        
+        SaveNewRecordHasBeenCalled = true;
     }
 }
 
@@ -86,6 +90,32 @@ public class ResultServiceTests
         Assert.AreEqual(WorkoutRegistrationStatus.NoSuchUser,result);
     }
 
+    [TestMethod]
+    public void When_new_record_it_is_stored_in_database()
+    {
+        //ARRANGE
+        var guid = Guid.NewGuid();
+        _fakeUserService.Existing.Clear();
+        _fakeUserService.Existing.Add(guid);
+        _fakeStatisticsService.SaveNewRecordHasBeenCalled = false;
+        _fakeStatisticsService.ValueToReturn = 100;
+        _fakeCalculationService.ValueToReturn = 10;
+
+        var workoutModel = new WorkoutResult
+        {
+            UserId = guid,
+            TotalMeters = 1000,
+            Start = DateTime.Now.AddHours(-5),
+            Slut = DateTime.Now.AddHours(-4),
+        };
+
+        //ACT 
+        var result = _sut.Register(workoutModel);
+
+        //ASSERT
+        Assert.IsTrue(_fakeStatisticsService.SaveNewRecordHasBeenCalled);
+
+    }
 
 
     [TestMethod]
