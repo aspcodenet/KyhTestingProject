@@ -32,6 +32,8 @@ public class SalaryCalculationService : ISalaryCalculationService
         var employee = _employeeRepository.GetBySSN(ssn);
         if (employee == null)
             return SalaryCalculationStatus.EmployeeNotFound;
+        // salary = antaltimmar *´....
+        // paymentService.Pay(ssn, salary)
         return SalaryCalculationStatus.Ok;
     }
 }
