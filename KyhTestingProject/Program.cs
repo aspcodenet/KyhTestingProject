@@ -1,5 +1,6 @@
 using KyhTestingProject.Data;
 using KyhTestingProject.Services;
+using KyhTestingProject.Services.Salary;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString)); ;
 
 builder.Services.AddTransient<DataInitializer>();
-builder.Services.AddTransient<IEmployeeService, EmployeeService>(); 
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

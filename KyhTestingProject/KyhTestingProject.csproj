@@ -63,8 +63,8 @@
     <Folder Include="Data\" />
     <Folder Include="Infrastructure\Profiles\" />
     <Folder Include="Library\" />
+    <Folder Include="Services\Salary\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

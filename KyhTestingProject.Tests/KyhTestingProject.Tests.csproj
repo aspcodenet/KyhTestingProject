@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Library\" />
-    <Folder Include="Services\" />
+    <Folder Include="Services\Salary\" />
   </ItemGroup>
 
   <ItemGroup>
