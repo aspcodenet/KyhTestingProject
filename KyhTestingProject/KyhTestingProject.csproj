@@ -63,6 +63,8 @@
     <Folder Include="Data\" />
     <Folder Include="Infrastructure\Profiles\" />
     <Folder Include="Library\" />
+    <Folder Include="NewFolder\" />
+    <Folder Include="Services\Workout\" />
     <Folder Include="Services\Salary\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
