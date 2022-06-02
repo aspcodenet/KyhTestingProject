@@ -15,15 +15,53 @@ public class FakeUserService : IUserService
     }
 }
 
+public class FakeCalculationService : ICalculationService
+{
+    public TimeSpan CalculateVelocityPerKm(DateTime workoutStart, DateTime workoutSlut, int workoutTotalMeters)
+    {
+        return TimeSpan.FromSeconds(10);
+    }
+}
+
+public class FakeStatisticsService : IStatisticsService
+{
+    public TimeSpan GetCurrentRecord(Guid workoutUserId)
+    {
+        return TimeSpan.FromSeconds(10);
+    }
+
+    public void SaveNewRecord(Guid workoutUserId, TimeSpan speed)
+    {
+        
+    }
+}
+
+public class FakeEmailService : IEmailService
+{
+    public void SendRecordMail(Guid workoutUserId)
+    {
+    }
+}
+
 [TestClass]
 public class ResultServiceTests
 {
     private ResultService _sut;
     private FakeUserService _fakeUserService;
+    private FakeCalculationService _fakeCalculationService;
+    private FakeStatisticsService _fakeStatisticsService;
+    private FakeEmailService _fakeEmailService;
     public ResultServiceTests()
     {
         _fakeUserService = new FakeUserService();
-        _sut = new ResultService(_fakeUserService);
+        _fakeCalculationService = new FakeCalculationService();
+        _fakeStatisticsService = new FakeStatisticsService();
+        _fakeEmailService = new FakeEmailService();
+        
+        _sut = new ResultService(_fakeUserService, 
+            _fakeCalculationService,
+            _fakeStatisticsService,
+            _fakeEmailService);
     }
 
     [TestMethod]
