@@ -1,0 +1,66 @@
+﻿@model KyhTestingProject.ViewModels.EmployeeEditViewModel
+
+<form method="post">
+    <h2>Edit employee</h2>
+          
+    <input asp-for="Id" type="hidden">
+
+    <label asp-for="FirstName">FirstName</label>
+    <input asp-for="FirstName">
+    <small asp-validation-for="FirstName" class="field-validation-error"></small>
+    
+    
+    <label asp-for="LastName">LastName</label>
+    <input asp-for="LastName">
+    <small asp-validation-for="LastName" class="field-validation-error"></small>
+
+    <label asp-for="Email">Email</label>
+    <input asp-for="Email">
+    <small asp-validation-for="Email" class="field-validation-error"></small>
+
+    <label asp-for="SSN">SSN</label>
+    <input asp-for="SSN">
+    <small asp-validation-for="SSN" class="field-validation-error"></small>
+
+    <label asp-for="StreetAddress">StreetAddress</label>
+    <input asp-for="StreetAddress">
+    <small asp-validation-for="StreetAddress" class="field-validation-error"></small>
+
+    <label asp-for="ZipCode">ZipCode</label>
+    <input asp-for="ZipCode">
+    <small asp-validation-for="ZipCode" class="field-validation-error"></small>
+
+    <label asp-for="City">City</label>
+    <input asp-for="City">
+    <small asp-validation-for="City" class="field-validation-error"></small>
+
+    <label asp-for="JobTitle">JobTitle</label>
+    <input asp-for="JobTitle">
+    <small asp-validation-for="JobTitle" class="field-validation-error"></small>
+
+    
+    <label asp-for="JobDescriptor">JobDescriptor</label>
+    <textarea asp-for="JobDescriptor" rows="5" cols="50" >
+                </textarea>
+    <small asp-validation-for="JobDescriptor" class="field-validation-error"></small>
+
+
+    <label asp-for="JobArea">JobArea</label>
+    <input asp-for="JobArea">
+    <small asp-validation-for="JobArea" class="field-validation-error"></small>
+    
+    <label asp-for="JobType">JobType</label>
+    <input asp-for="JobType">
+    <small asp-validation-for="JobType" class="field-validation-error"></small>
+
+    <label asp-for="Started">Started</label>
+    <input asp-for="Started">
+    <small asp-validation-for="Started" class="field-validation-error"></small>
+
+    <label asp-for="Ended">Ended</label>
+    <input asp-for="Ended">
+    <small asp-validation-for="Ended" class="field-validation-error"></small>
+
+    <input type="submit" value="Submit">
+
+</form>
