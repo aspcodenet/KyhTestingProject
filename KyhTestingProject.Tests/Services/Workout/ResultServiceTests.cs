@@ -49,9 +49,56 @@ namespace KyhTestingProject.Tests.Services.Workout;
 //    }
 //}
 
+//public class Player
+//{
+//    public int Id { get; set; }
+//    public string Name { get; set; }
+//    public int JerseyNumber { get; set; }
+//}
+
+//public interface IPlayerRepository
+//{
+//    List<Player> GetAll(string position);
+//    Player GetTheBest();
+//}
+
 [TestClass]
 public class ResultServiceTests
 {
+    //[TestMethod]
+    //public void Whatever()
+    //{
+    //    //En låda som vi kan fylla med regler
+    //    var playerRepositoryMock = new Mock<IPlayerRepository>();
+    //    //en låda som kan bete sig som en IPlayerRepository
+    //    //när nån anropar lådan genom IPlayerRepository så kommer
+    //    //regelverket att avgöra vad som ska returneras
+    //    playerRepositoryMock.Setup(e => e.GetAll(It.IsAny<string>()))
+    //        .Returns(new List<Player>
+    //    {
+    //        new Player { Id=1, JerseyNumber = 13, Name = "Mats Sundin"},
+    //        new Player{ Id=2, JerseyNumber = 21, Name = "Peter Forsberg"},
+    //        new Player{ Id=3, JerseyNumber = 1, Name = "Peter Lindmark"}
+    //    });
+    //    //playerRepositoryMock.Setup(e => e.GetAll("forward")).Returns(new List<Player>
+    //    //{
+    //    //    new Player { Id=1, JerseyNumber = 13, Name = "Mats Sundin"},
+    //    //    new Player{ Id=2, JerseyNumber = 21, Name = "Peter Forsberg"},
+    //    //});
+    //    //playerRepositoryMock.Setup(e => e.GetAll("goalie")).Returns(new List<Player>
+    //    //{
+    //    //    new Player{ Id=3, JerseyNumber = 1, Name = "Peter Lindmark"}
+    //    //});
+
+    //    var result = playerRepositoryMock.Object.GetAll("goalie");
+    //    foreach (var v in result)
+    //    {
+    //        Console.WriteLine(v.Name);
+    //    }
+    //    Assert.AreEqual(3, result.Count);
+
+    //}
+
     private ResultService _sut;
     private Mock<IUserService> userServiceMock;
     private Mock<ICalculationService> calculationServiceMock;
@@ -131,7 +178,27 @@ public class ResultServiceTests
 
         //ASSERT
         Assert.AreEqual(WorkoutRegistrationStatus.Ok, result);
-        statisticsServiceMock.Verify(e=>e.SaveNewRecord(guid,TimeSpan.FromSeconds(98)),Times.Once);
+        statisticsServiceMock.Verify(e=>e.SaveNewRecord(guid,TimeSpan.FromSeconds(98)),
+            Times.Once);
+    }
+
+    [TestMethod]
+    public void When_not_new_record_should_not_save()
+    {
+        //ARRANGE
+        userServiceMock.Setup(u => u.Exists(It.IsAny<Guid>())).Returns(true);
+
+        calculationServiceMock.Setup(e => e.CalculateVelocityPerKm(It.IsAny<DateTime>(),
+            It.IsAny<DateTime>(), It.IsAny<int>()
+        )).Returns(TimeSpan.FromSeconds(100));
+
+        statisticsServiceMock.Setup(e=>e.GetCurrentRecord(It.IsAny<Guid>()))
+            .Returns(TimeSpan.FromSeconds(5));
+
+        _sut.Register(new WorkoutResult());
+
+        statisticsServiceMock.Verify(e => e.SaveNewRecord(It.IsAny<Guid>(),
+            It.IsAny<TimeSpan>()), Times.Never);
 
     }
 
