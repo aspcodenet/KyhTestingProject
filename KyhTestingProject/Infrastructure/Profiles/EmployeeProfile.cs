@@ -10,5 +10,6 @@ public class EmployeeProfile : Profile
     {
         CreateMap<Employee, EmployeeIndexViewModel.EmployeeItem>()
             .ForMember(e => e.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
+        CreateMap<Employee, EmployeeEditViewModel>().ReverseMap();
     }
 }

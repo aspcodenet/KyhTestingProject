@@ -19,4 +19,14 @@ public class EmployeeService : IEmployeeService
             Employees =  _context.Employees.Where(e => e.Ended.Year == 1).ToList()
         };
     }
+
+    public Employee Get(int id)
+    {
+        return _context.Employees.First(e => e.Id == id);
+    }
+
+    public void Save()
+    {
+        _context.SaveChanges();
+    }
 }

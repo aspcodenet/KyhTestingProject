@@ -6,6 +6,8 @@ public interface IEmployeeService
 {
     ActiveEmployeesResult GetActiveEmployees();
 
+    Employee Get(int id);
+    void Save();
 }
 
 public class ActiveEmployeesResult

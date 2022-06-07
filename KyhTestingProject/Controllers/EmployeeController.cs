@@ -26,4 +26,27 @@ public class EmployeeController : Controller
         model.PeopleLeft = result.NrOfPeopleWhoHasQuitted;
         return View(model);
     }
+
+    public IActionResult Edit(int id)
+    {
+        var result = _employeeService.Get(id);
+        var model = _mapper.Map<EmployeeEditViewModel>(result);
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(EmployeeEditViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var employee = _employeeService.Get(model.Id);
+            _mapper.Map(model, employee);
+
+            _employeeService.Save();
+            return RedirectToAction("Index");
+        }
+
+        return View(model);
+    }
 }
