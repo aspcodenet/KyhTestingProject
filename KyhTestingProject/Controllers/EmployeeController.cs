@@ -37,7 +37,7 @@ public class EmployeeController : Controller
 
     [HttpPost]
     public IActionResult Edit(EmployeeEditViewModel model)
-    {
+    { 
         if (ModelState.IsValid)
         {
             var employee = _employeeService.Get(model.Id);
