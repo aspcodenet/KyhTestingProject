@@ -50,6 +50,41 @@ public class EmployeeControllerTests
     }
 
     [TestMethod]
+    public void Edit_with_invalid_model_should_return_same_view()
+    {
+        var model = new EmployeeEditViewModel
+        {
+
+        };
+        sut.ModelState.AddModelError("ds", "342234");
+        var result = sut.Edit(model) as ViewResult;
+
+        Assert.IsNull(result.ViewName);
+    }
+
+    [TestMethod]
+    public void Edit_with_valid_model_should_save_and_redirect()
+    {
+        //ARRANGE  PERFEKT VÄRLD  (inga modelstate errors)
+        var model = new EmployeeEditViewModel
+        {
+            Id = 1
+        };
+        employeeServiceMock.Setup(e => e.Get(1)).Returns(new Employee());
+
+
+        var result = sut.Edit(model) as RedirectResult;
+
+        //ASSERT
+        employeeServiceMock.Verify(e=>e.Save(), Times.Once);
+        Assert.IsNotNull(result);
+
+
+    }
+
+
+
+    [TestMethod]
     public void Edit_should_be_of_correct_model()
     {
         //ARRANGE
