@@ -72,8 +72,8 @@ public class EmployeeControllerTests
         };
         employeeServiceMock.Setup(e => e.Get(1)).Returns(new Employee());
 
-
-        var result = sut.Edit(model) as RedirectResult;
+        var r2 = sut.Edit(model);
+        var result = sut.Edit(model) as RedirectToActionResult;
 
         //ASSERT
         employeeServiceMock.Verify(e=>e.Save(), Times.Once);

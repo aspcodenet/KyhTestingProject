@@ -47,6 +47,6 @@ public class EmployeeController : Controller
             return RedirectToAction("Index");
         }
 
-        return View(model);
+        return View( model);
     }
 }
