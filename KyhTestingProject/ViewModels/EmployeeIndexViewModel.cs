@@ -2,7 +2,7 @@
 
 namespace KyhTestingProject.ViewModels;
 
-public class EmployeeIndexViewModel
+public class EmployeeIndexViewModel // stefantest12345
 {
     public int PeopleLeft { get; set; }
 
